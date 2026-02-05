@@ -1,0 +1,20 @@
+# Build outputs (can be regenerated)
+split-ical
+split-ical.exe
+
+# Test files
+test_*.ics
+split_output*/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Screenshots (optional, remove if you want to keep)
+*.png
+generate_test_8mb.py

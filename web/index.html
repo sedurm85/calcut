@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalCut - 한글 iCalendar 파일 분할</title>
+    <meta name="description" content="한글이 포함된 Google Calendar .ics 파일을 완벽하게 분할합니다. 크기/이벤트 단위 분할, 100% 브라우저 처리, 서버 업로드 없음.">
+    <meta name="keywords" content="ics 분할, iCalendar 분할, 구글 캘린더, 한글 캘린더, ics splitter, calendar split">
+    <meta property="og:title" content="CalCut - 한글 iCalendar 파일 분할">
+    <meta property="og:description" content="한글이 포함된 .ics 파일을 완벽하게 분할합니다. 100% 브라우저 처리.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✂️ CalCut</h1>
+            <p class="tagline">한글 iCalendar 파일을 완벽하게 분할</p>
+            <div class="badges">
+                <div class="privacy-badge">
+                    <span class="badge">🔒 100% 브라우저 처리</span>
+                    <span class="badge-desc">파일이 서버로 전송되지 않습니다</span>
+                </div>
+                <div class="korean-badge">
+                    <span class="badge">🇰🇷 한글 완벽 지원</span>
+                    <span class="badge-desc">UTF-8 인코딩 정확히 처리</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="drop-zone" class="drop-zone">
+                <div class="drop-zone-content">
+                    <div class="drop-icon">📁</div>
+                    <p class="drop-text">.ics 파일을 여기에 드래그하거나</p>
+                    <button type="button" class="browse-btn" id="browse-btn">파일 선택</button>
+                    <input type="file" id="file-input" accept=".ics" hidden>
+                </div>
+            </div>
+
+            <div id="file-info" class="file-info hidden">
+                <div class="file-details">
+                    <span class="file-name" id="file-name"></span>
+                    <span class="file-meta" id="file-meta"></span>
+                </div>
+                <button type="button" class="remove-btn" id="remove-file">✕</button>
+            </div>
+
+            <div id="options" class="options hidden">
+                <h3>분할 옵션</h3>
+                
+                <div class="option-group">
+                    <label class="radio-label">
+                        <input type="radio" name="split-mode" value="size" checked>
+                        <span class="radio-custom"></span>
+                        <span class="label-text">크기 기준 분할</span>
+                    </label>
+                    <div class="size-input-group" id="size-options">
+                        <select id="max-size">
+                            <option value="512K">512 KB</option>
+                            <option value="1M" selected>1 MB</option>
+                            <option value="2M">2 MB</option>
+                            <option value="5M">5 MB</option>
+                            <option value="10M">10 MB</option>
+                        </select>
+                        <span class="size-desc">이하로 분할</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label class="radio-label">
+                        <input type="radio" name="split-mode" value="event">
+                        <span class="radio-custom"></span>
+                        <span class="label-text">이벤트당 1파일</span>
+                    </label>
+                </div>
+
+                <div class="option-group prefix-group">
+                    <label for="prefix">파일명 접두사 (선택)</label>
+                    <input type="text" id="prefix" placeholder="예: calendar">
+                </div>
+
+                <button type="button" class="split-btn" id="split-btn">
+                    <span class="btn-icon">✂️</span>
+                    <span class="btn-text">분할하기</span>
+                </button>
+            </div>
+
+            <div id="results" class="results hidden">
+                <h3>분할 결과</h3>
+                <div class="result-summary" id="result-summary"></div>
+                <div class="result-list" id="result-list"></div>
+                <div class="result-actions">
+                    <button type="button" class="download-all-btn" id="download-all">
+                        📦 전체 다운로드 (ZIP)
+                    </button>
+                    <button type="button" class="reset-btn" id="reset-btn">
+                        🔄 다시 시작
+                    </button>
+                </div>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>처리 중...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>오픈소스 프로젝트 · <a href="https://github.com" target="_blank">GitHub</a></p>
+            <p class="footer-note">Google Calendar, Outlook, 네이버 캘린더 등에서 내보낸 .ics 파일을 지원합니다</p>
+        </footer>
+    </div>
+
+    <script src="js/wasm_exec.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
