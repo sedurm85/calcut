@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://calcut-ekc.pages.dev/sitemap.xml
+Sitemap: https://calcut-app.pages.dev/sitemap.xml
