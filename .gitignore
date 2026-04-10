@@ -18,3 +18,10 @@ Thumbs.db
 # Screenshots (optional, remove if you want to keep)
 *.png
 generate_test_8mb.py
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
