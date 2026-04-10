@@ -219,31 +219,38 @@ func splitBySize(parsed ParsedCalendar, prefix string, maxBytes int64) []SplitRe
 	return results
 }
 
-func splitPerEvent(parsed ParsedCalendar, prefix string) []SplitResult {
+func splitByEventCount(parsed ParsedCalendar, prefix string, eventsPerFile int) []SplitResult {
 	var results []SplitResult
+	tag := prefix
+	if tag == "" {
+		tag = "part"
+	}
 
-	for i, event := range parsed.Events {
-		idx := i + 1
-		summaryPart := "event"
-		if event.Summary != "" {
-			summaryPart = sanitizeFilename(event.Summary)
+	totalEvents := len(parsed.Events)
+	chunkIdx := 1
+
+	for i := 0; i < totalEvents; i += eventsPerFile {
+		end := i + eventsPerFile
+		if end > totalEvents {
+			end = totalEvents
 		}
 
-		var filename string
-		if prefix != "" {
-			filename = prefix + "_" + padNumber(idx) + "_" + summaryPart + ".ics"
-		} else {
-			filename = padNumber(idx) + "_" + summaryPart + ".ics"
+		var eventTexts []string
+		for j := i; j < end; j++ {
+			eventTexts = append(eventTexts, parsed.Events[j].Text)
 		}
 
-		content := buildICS(parsed.HeaderLines, parsed.Timezones, []string{event.Text})
+		filename := tag + "_" + padNumber(chunkIdx) + ".ics"
+		content := buildICS(parsed.HeaderLines, parsed.Timezones, eventTexts)
 		results = append(results, SplitResult{
 			Filename: filename,
 			Content:  content,
-			Events:   1,
+			Events:   len(eventTexts),
 			Size:     len(content),
 		})
+		chunkIdx++
 	}
+
 	return results
 }
 
@@ -276,7 +283,8 @@ func splitIcalJS(this js.Value, args []js.Value) interface{} {
 
 	var results []SplitResult
 
-	if mode == "size" && maxSize != "" {
+	switch mode {
+	case "size":
 		maxBytes := parseSize(maxSize)
 		if maxBytes <= 0 {
 			return js.ValueOf(map[string]interface{}{
@@ -284,8 +292,16 @@ func splitIcalJS(this js.Value, args []js.Value) interface{} {
 			})
 		}
 		results = splitBySize(parsed, prefix, maxBytes)
-	} else {
-		results = splitPerEvent(parsed, prefix)
+	case "count":
+		eventCount := options.Get("eventCount").Int()
+		if eventCount <= 0 {
+			eventCount = 100
+		}
+		results = splitByEventCount(parsed, prefix, eventCount)
+	default:
+		return js.ValueOf(map[string]interface{}{
+			"error": "알 수 없는 분할 모드입니다",
+		})
 	}
 
 	jsResults := make([]interface{}, len(results))

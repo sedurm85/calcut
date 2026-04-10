@@ -247,7 +247,8 @@ header h1 {
     font-weight: 500;
 }
 
-.size-input-group {
+.size-input-group,
+.count-input-group {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -255,12 +256,18 @@ header h1 {
     margin-top: 0.5rem;
 }
 
-.size-input-group select {
+.size-input-group select,
+.count-input-group input {
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 6px;
     font-size: 0.9rem;
     background: white;
+}
+
+.count-input-group input {
+    width: 80px;
+    text-align: center;
 }
 
 .size-desc {
@@ -470,6 +477,141 @@ header h1 {
     display: none !important;
 }
 
+/* Info Section */
+.info-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.info-block {
+    margin-bottom: 2.5rem;
+}
+
+.info-block h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+}
+
+/* Problems Block */
+.problem-list {
+    list-style: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.problem-list li {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.problem-list li:last-child {
+    border-bottom: none;
+}
+
+.problem-icon {
+    flex-shrink: 0;
+}
+
+/* Features Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: box-shadow 0.2s;
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.375rem;
+    color: var(--text);
+}
+
+.feature-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Steps List */
+.steps-list {
+    list-style: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.steps-list li {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+}
+
+.steps-list li:last-child {
+    border-bottom: none;
+}
+
+.step-num {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Calendar Tags */
+.calendar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+}
+
+.calendar-tag {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid #a7f3d0;
+    color: #047857;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
 footer {
     text-align: center;
     margin-top: 2rem;
@@ -508,5 +650,17 @@ footer a:hover {
     
     .result-actions {
         flex-direction: column;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-list {
+        flex-direction: column;
+    }
+
+    .calendar-tag {
+        text-align: center;
     }
 }

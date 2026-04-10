@@ -15,7 +15,9 @@
         removeFile: document.getElementById('remove-file'),
         options: document.getElementById('options'),
         sizeOptions: document.getElementById('size-options'),
+        countOptions: document.getElementById('count-options'),
         maxSize: document.getElementById('max-size'),
+        eventCount: document.getElementById('event-count'),
         prefix: document.getElementById('prefix'),
         splitBtn: document.getElementById('split-btn'),
         results: document.getElementById('results'),
@@ -115,6 +117,7 @@
             const options = {
                 mode: mode,
                 maxSize: mode === 'size' ? elements.maxSize.value : '',
+                eventCount: mode === 'count' ? parseInt(elements.eventCount.value, 10) : 0,
                 prefix: elements.prefix.value.trim(),
             };
 
@@ -231,13 +234,14 @@
 
         document.querySelectorAll('input[name="split-mode"]').forEach(function(radio) {
             radio.addEventListener('change', function() {
-                if (this.value === 'size') {
-                    elements.sizeOptions.style.opacity = '1';
-                    elements.sizeOptions.style.pointerEvents = 'auto';
-                } else {
-                    elements.sizeOptions.style.opacity = '0.5';
-                    elements.sizeOptions.style.pointerEvents = 'none';
-                }
+                const isSize = this.value === 'size';
+                const isCount = this.value === 'count';
+                
+                elements.sizeOptions.style.opacity = isSize ? '1' : '0.5';
+                elements.sizeOptions.style.pointerEvents = isSize ? 'auto' : 'none';
+                
+                elements.countOptions.style.opacity = isCount ? '1' : '0.5';
+                elements.countOptions.style.pointerEvents = isCount ? 'auto' : 'none';
             });
         });
 
@@ -266,6 +270,10 @@
 
     async function init() {
         initEventListeners();
+        
+        elements.countOptions.style.opacity = '0.5';
+        elements.countOptions.style.pointerEvents = 'none';
+        
         await Promise.all([
             initWasm(),
             loadJSZip(),
